@@ -23,7 +23,7 @@ csl: apa.csl
 link-citations: no
 ---
 
-> Note: An html version of this document, which includes the evaluated result of all code chunks, can be found at https://djvill.github.io/How-to-Train-Your-Classifier/How_to_Train_Your_Classifier.html.
+> Note: An html version of this document, which includes the evaluated result of all code chunks, can be found at https://nzilbb.github.io/How-to-Train-Your-Classifier/How_to_Train_Your_Classifier.html.
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, comment = "", dpi=600, warning=FALSE)
@@ -61,7 +61,7 @@ blockquote {
 
 # Introduction
 
-This guide walks readers through the process of training a random-forest classifier for automated coding of sociophonetic variation, using the statistical computing language R [@RCoreTeam2018] and the packages `ranger` [@WrightZiegler2017] and `caret` [@Kuhn2018]. This guide is intended to be a companion to our manuscript "From categories to gradience: Auto-coding sociophonetic variation with random forests", and it recreates the classifier of Southland English non-prevocalic /r/ discussed in the manuscript. By consulting [the R Markdown file that generated this document](https://github.com/djvill/How-to-Train-Your-Classifier/blob/master/How_to_Train_Your_Classifier.Rmd), readers can run the code on their own systems to recreate the /r/ classifier.
+This guide walks readers through the process of training a random-forest classifier for automated coding of sociophonetic variation, using the statistical computing language R [@RCoreTeam2018] and the packages `ranger` [@WrightZiegler2017] and `caret` [@Kuhn2018]. This guide is intended to be a companion to our manuscript "From categories to gradience: Auto-coding sociophonetic variation with random forests", and it recreates the classifier of Southland English non-prevocalic /r/ discussed in the manuscript. By consulting [the R Markdown file that generated this document](https://github.com/nzilbb/How-to-Train-Your-Classifier/blob/master/How_to_Train_Your_Classifier.Rmd), readers can run the code on their own systems to recreate the /r/ classifier.
 
 > IMPORTANT: While you can run all this code, we don't recommend trying to run it all at once (e.g., by 'knitting' the R Markdown document); the code that generated this document was tailored to a machine with 32 processors and still takes several hours to run start-to-finish. As we mention below, training a classifier is not a one-size-fits-all process.
 
