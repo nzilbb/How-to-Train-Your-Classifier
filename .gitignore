@@ -35,5 +35,6 @@ vignettes/*.pdf
 # Shiny token, see https://shiny.rstudio.com/articles/shinyapps.html
 rsconnect/
 
-# Important note for Dan
+# Important notes for Dan
 Important.txt
+AnonymizeT.*
