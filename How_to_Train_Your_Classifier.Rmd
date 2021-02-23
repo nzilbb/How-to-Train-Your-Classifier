@@ -1,7 +1,7 @@
 ---
 title: "How to Train Your Classifier"
 author: "Dan Villarreal, Lynn Clark, Jennifer Hay, and Kevin Watson"
-date: "Original version 24 July 2019; Updated 11 June 2019"
+date: "Original version 24 July 2019; Updated 11 June 2020"
 output: 
   bookdown::html_document2:
     toc: yes
