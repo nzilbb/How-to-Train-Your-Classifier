@@ -12,6 +12,11 @@
 #SBATCH --mem=60000
 #SBATCH --output=smp-shell-script.out
 
+# Set memory limit (avoid R error "C stack usage is too high")
+let lim=1024\*60000
+ulimit -s $lim
+ulimit -s
+
 module load gcc/8.2.0 r/4.1.0 pandoc/2.5
 Rscript -e "rmarkdown::render('How_to_Train_Your_Classifier.Rmd',
                               params=list(\`SLURM_job-id\`=$SLURM_JOB_ID,
