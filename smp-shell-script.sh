@@ -12,7 +12,7 @@
 #SBATCH --mem=60000
 #SBATCH --output=smp-shell-script.out
 
-module load gcc/10.2.0 r/4.0.0 pandoc/2.5
+module load gcc/8.2.0 r/4.1.0 pandoc/2.5
 Rscript -e "rmarkdown::render('How_to_Train_Your_Classifier.Rmd',
                               params=list(\`SLURM_job-id\`=$SLURM_JOB_ID,
                                           SLURM_nodeid='$SLURM_NODELIST',

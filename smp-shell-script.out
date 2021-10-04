@@ -1,0 +1,27 @@
+Lmod has detected the following error: These module(s) exist but cannot be
+loaded as requested: "r/4.0.0"
+
+   Try: "module spider r/4.0.0" to see how to load the module(s).
+
+
+
+
+/var/spool/slurmd/job4478192/slurm_script: line 16: Rscript: command not found
+============================================================================
+                               JOB STATISTICS                              
+============================================================================
+      SubmitTime: 2021-10-04T13:17:52
+         EndTime: 2021-10-04T22:17:54
+         RunTime: 00:00:01
+           JobId: 4478192
+            TRES: cpu=16,mem=60000M,node=1,billing=12
+       Partition: smp
+        NodeList: smp-n36
+         Command: /ihome/dvillarreal/dav49/How-to-Train-Your-Classifier/smp-shell-script.sh
+          StdOut: /ihome/dvillarreal/dav49/How-to-Train-Your-Classifier/smp-shell-script.out
+More information:
+    - `sacct -M smp -j 4478192 -S 2021-10-04T13:17:52 -E 2021-10-04T22:17:54`
+   Print control:
+    - List of all possible fields: `sacct --helpformat`
+    - Add `--format=<field1,field2,etc>` with fields of interest
+============================================================================
