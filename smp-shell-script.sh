@@ -10,7 +10,6 @@
 #SBATCH --tasks-per-node=4
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=60000
-#SBATCH --begin=now+6hour
 #SBATCH --output=smp-shell-script.out
 
 module load gcc/10.2.0 r/4.0.0 pandoc/2.5
