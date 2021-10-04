@@ -1,7 +1,7 @@
 ---
-title: "How to Train Your Classifier"
+title: "How to Train Your Classifier (`crc-version`)"
 author: "Dan Villarreal, Lynn Clark, Jennifer Hay, and Kevin Watson"
-date: "Original version 24 July 2019; Updated 11 June 2020"
+date: "Original 24 July 2019; Last modified 4 October 2021"
 output: 
   bookdown::html_document2:
     toc: yes
@@ -18,6 +18,14 @@ params:
   tzRound: 2
   dfRound: 2
   logLikRound: 2
+  SLURM_job-id: NULL
+  SLURM_nodeid: NULL
+  SBATCH_partition: NULL
+  SBATCH_nodes: NULL
+  SBATCH_tasks-per-node: NULL
+  SBATCH_cpus-per-task: NULL
+  SBATCH_mem: NULL
+  testing: FALSE
 bibliography: ["LabPhonRefs.bib"]
 csl: apa.csl
 link-citations: no
@@ -25,7 +33,14 @@ link-citations: no
 
 > Note: An html version of this document, which includes the evaluated result of all code chunks, can be found at https://nzilbb.github.io/How-to-Train-Your-Classifier/How_to_Train_Your_Classifier.html.
 
+```{r startTime}
+startTime <- proc.time()
+startSysTime <- Sys.time()
+```
+
 ```{r setup, include=FALSE}
+startTime <- proc.time()
+
 knitr::opts_chunk$set(echo = TRUE, comment = "", dpi=600, warning=FALSE)
 
 library(tidyverse)
@@ -37,8 +52,12 @@ library(DMwR)
 library(parallel)
 library(foreach)
 library(doParallel)
+library(diptest)
 ```
 
+```{r setupEndTime}
+setupEndTime <- proc.time()
+```
 
 
 ```{css, echo=FALSE}
@@ -59,9 +78,14 @@ blockquote {
 }
 ```
 
+# Preface: `crc-version` branch
+
+This document was created to test the performance of the [Center for Research Computing](https://crc.pitt.edu/) high-performance computing cluster, and to save the data for later. Because Pitt's HPC cluster setup differs from the University of Canterbury HPC cluster on which this document was originally run, the output data in this document isn't identical to that of the [original](https://nzilbb.github.io/How-to-Train-Your-Classifier/How_to_Train_Your_Classifier.html). Information on cluster performance (i.e., timing) can be found [below](#generate_test-script_summary). This repo also contains the [Slurm shell script](https://github.com/nzilbb/How-to-Train-Your-Classifier/blob/crc-version/smp-shell-script.sh) that was used to run this document.
+
+
 # Introduction
 
-This guide walks readers through the process of training a random-forest classifier for automated coding of sociophonetic variation, using the statistical computing language R [@RCoreTeam2018] and the packages `ranger` [@WrightZiegler2017] and `caret` [@Kuhn2018]. This guide is intended to be a companion to our [2020 _Laboratory Phonology_ article](https://www.journal-labphon.org/articles/10.5334/labphon.216/) "From categories to gradience: Auto-coding sociophonetic variation with random forests", and it recreates the classifier of Southland English non-prevocalic /r/ discussed in the article. By consulting [the R Markdown file that generated this document](https://github.com/nzilbb/How-to-Train-Your-Classifier/blob/main/How_to_Train_Your_Classifier.Rmd), readers can run the code on their own systems to recreate the /r/ classifier.
+This guide walks readers through the process of training a random-forest classifier for automated coding of sociophonetic variation, using the statistical computing language R [@RCoreTeam2018] and the packages `ranger` [@WrightZiegler2017] and `caret` [@Kuhn2018]. This guide is intended to be a companion to our manuscript "From categories to gradience: Auto-coding sociophonetic variation with random forests", and it recreates the classifier of Southland English non-prevocalic /r/ discussed in the manuscript. By consulting [the R Markdown file that generated this document](https://github.com/nzilbb/How-to-Train-Your-Classifier/blob/crc-version/How_to_Train_Your_Classifier.Rmd), readers can run the code on their own systems to recreate the /r/ classifier.
 
 > IMPORTANT: While you can run all this code, we don't recommend trying to run it all at once (e.g., by 'knitting' the R Markdown document); the code that generated this document was tailored to a machine with 32 processors and still takes several hours to run start-to-finish. As we mention below, training a classifier is not a one-size-fits-all process.
 
@@ -104,28 +128,6 @@ if (!dir.exists("Model Status")) dir.create("Model Status")
 # Step 0: Get hand-coded data and load required packages
 
 To run the code in this guide, you'll need [R](https://cran.r-project.org/) and several R packages. In particular, this code relies heavily on the collection of packages called the [tidyverse](https://www.tidyverse.org/), which make R code faster, more readable, and safer. Though you can run this code without it, we recommend the [RStudio](https://www.rstudio.com/) integrated development environment for ease of understanding code. Information on the system, R version, and package versions that generated this guide can be found at the [end of this guide](#Train-SessionInfo). 
-
-Install necessary packages:
-
-```{r, class.source="displayCode"}
-##From https://stackoverflow.com/a/9341833/5432121
-pkgTest <- function(x) {
-  if (!require(x, character.only=TRUE)) {
-    install.packages(x)
-    if (!require(x, character.only=TRUE)) stop(paste("Package", x, "not found"))
-  }
-}
-
-pkgTest("tidyverse")
-pkgTest("magrittr")
-pkgTest("DMwR")
-pkgTest("diptest")
-pkgTest("parallel")
-pkgTest("foreach")
-pkgTest("doParallel")
-pkgTest("caret")
-pkgTest("ranger")
-```
 
 As a prerequisite to the steps we describe in this guide, you'll also need data that has been hand-coded into two or more variants and for which you have all the acoustic measures you'll want to enter into the classifier. In the case of our /r/ classifier (for which we provide the data as an example), we had several thousand hand-coded tokens, for which we extracted 180 acoustic measures using the "Process with Praat" function in LaBB-CAT [@FromontHay2012]; these measures were motivated by previous literature on the acoustic correlates of rhoticity in English and other languages [e.g., @LawsonStuartSmithScobbie2018; @Heselwood2009]. More details on the choice of these measures can be found in the main text.
 
@@ -178,9 +180,9 @@ trainingData <-
 
 Fourth, to deal with tokens that had missing pitch and/or F4 measurements (including F4 bandwidth), we imputed missing F0 and F4 measurements using *k* Nearest Neighbor imputation (with *k* = 10) via the function `knnImputation()` in the package `DMwR` [@Torgo2010]. Since random forests cannot classify observations with missing measurements, the imputation of missing measurements is common practice in machine learning contexts [e.g., @BreenEtAl2019; @HudakEtAl2008]. At the same time, this step won't necessarily apply to every data set (we didn't need to impute any measurements for the medial /t/ data). Note that this next step can be fairly time-consuming (on the cluster, it takes around 15 minutes).
 
-> For time-consuming steps such as imputation, we use caching to save time by avoiding re-running code. If we give the chunk a unique name and set `cache=TRUE`, R Markdown will save the results of the code chunk to a cache when initially knitting the file, such that on subsequent knits the results will simply be re-loaded. This can save a considerable amount of time, especially if you want to tweak text that's outside of the cached chunks or plots that use data generated by cached chunks, etc. More info on caching can be found at https://yihui.name/knitr/demo/cache/ and in the `knitr` manual at https://yihui.name/knitr/demo/manual/.
+> For time-consuming steps such as imputation, we use caching to save time by avoiding re-running code. If we give the chunk a unique name and set `cache=params$testing`, R Markdown will save the results of the code chunk to a cache when initially knitting the file, such that on subsequent knits the results will simply be re-loaded. This can save a considerable amount of time, especially if you want to tweak text that's outside of the cached chunks or plots that use data generated by cached chunks, etc. More info on caching can be found at https://yihui.name/knitr/demo/cache/ and in the `knitr` manual at https://yihui.name/knitr/demo/manual/.
 
-```{r imputation, class.output="displayCode", cache=TRUE}
+```{r imputation, class.output="displayCode", cache=params$testing}
 ##Capture current column ordering
 origCols <- trainingData %>% colnames()
 
@@ -224,7 +226,7 @@ rm(imputeDF)
 Fifth, we marked numerous measures for potential outlier-hood: formant timepoint measures, formant minima/maxima, pitch timepoint measures, pitch minima/maxima, intensity measures, and duration. Potential outliers were measurements that were more than 1.5 $\times$ the interquartile range (third quartile minus first quartile) outside the first or third quartile for that measure's distribution by speaker and by vowel. We won't actually *exclude* outliers now; instead, we'll use outlier data in Step 5 below to figure out which outliers we can afford to keep, and which ones we're better off discarding. As with imputation, outlier-marking isn't necessary or appropriate for all situations; we give more details in the subsection following this one.
 
 
-```{r markOutliers, class.output="displayCode", cache=TRUE}
+```{r markOutliers, class.output="displayCode", cache=params$testing}
 trainingData <-
   trainingData %>%
   group_by(Speaker, Vowel) %>% 
@@ -246,9 +248,13 @@ trainingData <-
 Let's save our progress by writing the training data to an RDS file.
 
 ```{r, class.output="displayCode"}
+saveLoadStartTime <- proc.time()
+
 if (!dir.exists("Data")) dir.create("Data")
 trainingData %>% saveRDS("Data/trainingData.Rds")
 trainingData <- readRDS("Data/trainingData.Rds")
+
+saveLoadEndTime <- proc.time()
 ```
 
 
@@ -298,7 +304,6 @@ We don't have any examples of distributions whose bimodality is due to the Absen
 ![Plot: Medial /t/ center of gravity at 70% by class](Data/MedialT_cog70.png)
 
 Now that we've determined that we can outlier-mark these measures, what criteria do we use to mark individual measurements as outliers? Two potential rules of thumb are to mark measurements that are more than 2 standard deviations from the mean, or to mark measurements that are more than 1.5 times the interquartile range from the first or third quartiles. The standard deviation-based rule is only appropriate if the data is normal, while the IQR-based rule is more general. In this case, since we had a lot of measures to outlier-mark, some of which are clearly non-normal (e.g., intensity at F3 minimum), we used the more general IQR rule of thumb. We also generated distributions within each speaker and vowel, since a well-behaving measurement in a rare vowel context can easily look like an outlier in the overall data.
-
 
 # Step 2: Determine classifier performance metric to optimize
 
@@ -380,7 +385,11 @@ In terms of syntax, we feed `train()` a formula, the data, a model type, a varia
 
 Because we haven't specified anything else (e.g., number of trees, resampling method), `train()` will use its defaults for the various hyperparameters we'll tune later.
 
-```{r fstInit, class.output="displayCode", cache=TRUE}
+```{r}
+fstInitStartTime <- proc.time()
+```
+
+```{r fstInit, class.output="displayCode", cache=params$testing}
 ##Run the model using a single core
 registerDoSEQ()
 ##RF are a stochastic process, so ensure reproducibility by setting a seed
@@ -397,6 +406,10 @@ fstInit <-
                                summaryFunction=cutoffSummary,
                                returnResamp="all",
                                classProbs=TRUE))
+```
+
+```{r}
+fstInitEndTime <- proc.time()
 ```
 
 The `fstInit` model we've just generated has lots of information inside of it. To pull out the most salient information from the model---the resampled performance results, an average confusion matrix, the variable importance scores, and timing information---we'll use a summary function. This summary function will also come in handy because the forest models are large files (`fstInit` on its own is `r fstInit %>% object.size() %>% format("Mb")`), and they'll add up when we're generating large lists of them in Steps 4 and 5, so we'll just save the summaries to disk rather than the forests.
@@ -480,6 +493,7 @@ rm(fstInit)
 ```
 
 
+
 # Step 4: Tune hyperparameters
 
 In this step, we adjust several hyperparameters to find the settings that will yield the best-performing model (with "best-performing" defined with respect to our chosen performance measure, of course). These hyperparameters control how the random forest classifier is run in `ranger` and how `caret` determines classifier performance. In particular, `caret` takes the training data and generates training and test subsets to calculate classifier performance measures, optionally performing additional resampling on these training and test subsets. 
@@ -509,7 +523,11 @@ Because we have unbalanced classes in our hand-coded data, this additional resam
 
 After constructing training and test subsets, `train()` can perform additional resampling to adjust for class imbalances in the training and test subsets prior to assessing classifier performance. By default, `train()` performs no additional resampling, but other options are downsampling the majority class to match the size of the minority class, and SMOTE sampling, a hybrid method that combines downsampling the majority class with creating synthetic members of the minority class [@ChawlaEtAl2002]. Given that the data are imbalanced, it's likely that a model that looks at the data as-is will perform well on the majority class, Absent, but poorly on the minority class, Present. For all the other hyperparameters, we start with default values (`method="boot"`, `number=25`, `num.trees=500`, `tuneGrid=data.frame(mtry=13, splitrule="gini", min.node.size=1)`).
 
-```{r fstListResamples, class.output="displayCode", cache=TRUE}
+```{r resampStartTime}
+resampStartTime <- proc.time()
+```
+
+```{r fstListResamples, class.output="displayCode", cache=params$testing}
 ##Define a vector with possible values of our hyperparameter
 tuneResamples <- c("none", "down", "smote")
 
@@ -558,11 +576,14 @@ fstListResamples <-
 stopCluster(cl)
 ```
 
+```{r resampEndTime}
+resampEndTime <- proc.time()
+```
 
 Clear the model status dummy files:
 
 ```{r, class.output="fileRemove"}
-dir("Model Status", pattern="^Resamples", full.names=TRUE) %>% file.remove()
+# dir("Model Status", pattern="^Resamples", full.names=TRUE) %>% file.remove()
 ```
 
 
@@ -612,6 +633,7 @@ Again, `caret` automatically saves timing data in the random forest objects it c
 smryResamples$times
 ```
 
+
 It's also a good idea when you're running these models to keep an eye on how much memory your forest lists are taking up by sitting in your R workspace. Here we see that our forest list with three different models takes up quite a bit of space. We're running these forests on a platform where memory's not a concern, but if it were, we'd certainly want to remove each forest list after extracting whatever summary information we want from the forest list and saving that summary to file.
 
 ```{r, class.output="displayCode"}
@@ -625,8 +647,11 @@ The possible subset generation methods are the simple bootstrap estimator, the 0
 
 Now, we generate our list of forests:
 
+```{r}
+methodsStartTime <- proc.time()
+```
 
-```{r fstListMethods, class.output="displayCode", cache=TRUE}
+```{r fstListMethods, class.output="displayCode", cache=params$testing}
 tuneMethods <- c("boot", "boot632", "cv", "repeatedcv", "LGOCV")
 
 cl <- makeCluster(tuneMethods %>% length())
@@ -660,11 +685,15 @@ fstListMethods <-
 stopCluster(cl)
 ```
 
+```{r}
+methodsEndTime <- proc.time()
+```
+
 
 Clear the model status dummy files:
 
 ```{r, class.output="fileRemove"}
-dir("Model Status", pattern="^Methods", full.names=TRUE) %>% file.remove()
+# dir("Model Status", pattern="^Methods", full.names=TRUE) %>% file.remove()
 ```
 
 
@@ -698,7 +727,12 @@ smryMethods$resample %>%
 Now that we've selected repeated *k*-fold cross-validation as our subset generation method, what's the optimal number of folds and the optimal number of repeats? For folds, We'll sample a space of options around the default of 10: 4, 6, 8, 10, 12, 14. For repeats, we'll sample a space of options around 5: 3, 5, 7.
 
 
-```{r fstListFoldsReps, class.output="displayCode", cache=TRUE}
+```{r}
+foldsRepsStartTime <- proc.time()
+```
+
+
+```{r fstListFoldsReps, class.output="displayCode", cache=params$testing}
 tuneListFoldsReps <- expand.grid(Folds = seq(4, 14, by=2),
                                  Repeats = seq(3, 7, by=2))
 
@@ -738,10 +772,14 @@ stopCluster(cl)
 ```
 
 
+```{r}
+foldsRepsEndTime <- proc.time()
+```
+
 Clear the model status dummy files:
 
 ```{r, class.output="fileRemove"}
-dir("Model Status", pattern="^FoldsReps", full.names=TRUE) %>% file.remove()
+# dir("Model Status", pattern="^FoldsReps", full.names=TRUE) %>% file.remove()
 ```
 
 Create another summary object:
@@ -770,8 +808,11 @@ smryFoldsReps$resample %>%
 
 Define an initial search space for these parameters. A typical value of `mtry` for classification is the square root of the number of predictors, rounded down to the nearest integer, which in the case of the /r/ data is 13; so we'll try a few `mtry` values around 13: 9, 11, 13, 15, 17. `splitrule` has two values, `"gini"` and `"extratrees"`, so we'll try both. Finally, the original `randomForest` package [@LiawWiener2002] uses `min.node.size` defaults of 1 for classification and 5 for regression, so for good measure we'll try 1, 5, and 10. With respect to the continuous parameters (`mtry` and `min.node.size`), the best classifiers in this initial round may indicate values toward the end of the ranges we tuned; if that's the case, we'll do another round of tuning these parameters with a better-informed range of values.  
 
+```{r}
+tuneListStartTime <- proc.time()
+```
 
-```{r fstListTuneGrid, class.output="displayCode", cache=TRUE}
+```{r fstListTuneGrid, class.output="displayCode", cache=params$testing}
 tuneList <- expand.grid(mtry=seq(9, 17, by=2), 
                         splitrule=c("gini", "extratrees"), 
                         min.node.size=c(1, 5, 10), 
@@ -811,17 +852,19 @@ fstListTuneGrid <-
   set_names(names(tuneList))
 ```
 
-
+```{r}
+tuneListEndTime <- proc.time()
+```
 
 Clear the model status dummy files:
 
 ```{r, class.output="fileRemove"}
-dir("Model Status", pattern="^TuneGrid", full.names=TRUE) %>% file.remove()
+# dir("Model Status", pattern="^TuneGrid", full.names=TRUE) %>% file.remove()
 ```
 
 To assess which tuning parameters are the best, we collect some of the most salient characteristics of the model (resampling results, confusion matrix, variable importance, and running time) into a summary object. We'll also save this summary in its own `.Rds` file, in case something goes awry and we lose our R session (which is a risk when you're trying to hold large objects in memory).
 
-```{r smryTuneGrid, class.output="displayCode", cache=TRUE}
+```{r smryTuneGrid, class.output="displayCode", cache=params$testing}
 smryTuneGrid <- fstListTuneGrid %>% fstSummary()
 smryTuneGrid %>% saveRDS("Model Status/SmryTuneGrid.Rds")
 ```
@@ -843,8 +886,11 @@ smryTuneGrid$resample %>%
 
 Finally, we can adjust the number of trees in our forest. We've been using 500 trees, but it seems reasonable to try smaller or larger forests. We'll try forests of size 250, 500, 750, and 1000; if it seems that our forests' performance only increases with greater size, we can try larger forests still.
 
+```{r}
+treesStartTime <- proc.time()
+```
 
-```{r fstListNumTrees, class.output="displayCode", cache=TRUE}
+```{r fstListNumTrees, class.output="displayCode", cache=params$testing}
 tuneNumTrees <- seq(250, 1000, by=250)
 
 cl <- makeCluster(tuneNumTrees %>% length())
@@ -880,10 +926,15 @@ stopCluster(cl)
 ```
 
 
+```{r}
+treesEndTime <- proc.time()
+```
+
+
 Clear the model status dummy files:
 
 ```{r, class.output="fileRemove"}
-dir("Model Status", pattern="^NumTrees", full.names=TRUE) %>% file.remove()
+# dir("Model Status", pattern="^NumTrees", full.names=TRUE) %>% file.remove()
 ```
 
 
@@ -922,7 +973,12 @@ After the tuning process, our classifier has the following hyperparameter settin
 
 Let's train another classifier with these parameter settings to get a snapshot of performance after tuning hyperparameters (since we're only training one model, we'll dispatch with the parallel backend):
 
-```{r fstTuned, class.output="displayCode", cache=TRUE}
+
+```{r}
+tunedStartTime <- proc.time()
+```
+
+```{r fstTuned, class.output="displayCode", cache=params$testing}
 registerDoSEQ()
 set.seed(302302)
 fstTuned <- train(Rpresent ~ .,
@@ -941,6 +997,11 @@ fstTuned <- train(Rpresent ~ .,
                                          returnResamp="all",
                                          classProbs=TRUE),
                   tuneGrid=data.frame(mtry=13, splitrule="gini", min.node.size=10))
+```
+
+
+```{r}
+tunedEndTime <- proc.time()
 ```
 
 Create and save a summary object:
@@ -972,7 +1033,11 @@ So far, we've been training our classifiers on the entire set of hand-coded data
 
 We already know how our model performs when we're maximally permissive about outliers. Let's train another model where we're maximally conservative about outliers, discarding every token with even a single outlying measurement:
 
-```{r fstNoOutlier, class.output="displayCode", cache=TRUE}
+```{r}
+noOutStartTime <- proc.time()
+```
+
+```{r fstNoOutlier, class.output="displayCode", cache=params$testing}
 registerDoSEQ()
 set.seed(302302)
 fstNoOutlier <- train(Rpresent ~ .,
@@ -995,6 +1060,10 @@ fstNoOutlier <- train(Rpresent ~ .,
 ```
 
 As the performance measures below show, this no-outlier classifier improves considerably over our previous model. 
+
+```{r}
+noOutEndTime <- proc.time()
+```
 
 ```{r, class.output="displayCode"}
 fstNoOutlier$resample %>% 
@@ -1047,7 +1116,11 @@ seedList <- replicate(5,
 First, train a list of 5 classifiers on the full data set (i.e., without dropping any outliers):
 
 
-```{r fstListDropOut0, class.output="displayCode", cache=TRUE}
+```{r}
+drop0StartTime <- proc.time()
+```
+
+```{r fstListDropOut0, class.output="displayCode", cache=params$testing}
 cl <- makeCluster(5)
 registerDoParallel(cl)
 clusterSetRNGStream(cl, 302302)
@@ -1074,6 +1147,10 @@ fstListDropOut0 <- foreach(seed = seedList,
                            }
 
 stopCluster(cl)
+```
+
+```{r}
+drop0EndTime <- proc.time()
 ```
 
 Extract and save a summary:
@@ -1191,7 +1268,11 @@ dropped <- character(0L)
 
 Now train another list of 5 classifiers, this time dropping tokens with outliers in the measure with the biggest negative impact on performance, F3_80:
 
-```{r fstListDropOut1_1, class.output="displayCode", cache=TRUE}
+```{r}
+drop11StartTime <- proc.time()
+```
+
+```{r fstListDropOut1_1, class.output="displayCode", cache=params$testing}
 tryDrop <- negOutliers$Measure[1]
 
 cl <- makeCluster(5)
@@ -1221,6 +1302,10 @@ fstListDropOut1_1 <- foreach(seed = seedList,
                              }
 
 stopCluster(cl)
+```
+
+```{r}
+drop11EndTime <- proc.time()
 ```
 
 Create and save a summary object:
@@ -1292,7 +1377,11 @@ We re-rank measures based on the results of this list of classifiers:
 
 And we continue the procedure by training another list of 5 classifiers, this time on data that drops tokens with outliers in F3_80 *and* intens_F3max:
 
-```{r fstListDropOut2_1, class.output="displayCode", cache=TRUE}
+```{r}
+drop21StartTime <- proc.time()
+```
+
+```{r fstListDropOut2_1, class.output="displayCode", cache=params$testing}
 rm(fstListDropOut1_1)
 
 tryDrop <- negOutliers$Measure[1]
@@ -1324,6 +1413,10 @@ fstListDropOut2_1 <- foreach(seed = seedList,
                              }
 
 stopCluster(cl)
+```
+
+```{r}
+drop21EndTime <- proc.time()
 ```
 
 Create and save a summary object:
@@ -1367,7 +1460,13 @@ list(smryDropOut1_1, smryDropOut2_1) %>%
 
 So we move on to the next measure in the ranking, F2_35, training a list of classifiers on data that drops outliers in F2_35 in addition to our established set of dropped outliers.
 
-```{r fstListDropOut2_2, class.output="displayCode", cache=TRUE}
+
+```{r}
+drop22StartTime <- proc.time()
+```
+
+
+```{r fstListDropOut2_2, class.output="displayCode", cache=params$testing}
 rm(fstListDropOut2_1)
 
 tryDrop <- negOutliers$Measure[2]
@@ -1399,6 +1498,11 @@ fstListDropOut2_2 <- foreach(seed = seedList,
                              }
 
 stopCluster(cl)
+```
+
+
+```{r}
+drop22EndTime <- proc.time()
 ```
 
 Create and save a summary object:
@@ -1469,7 +1573,11 @@ We re-rank measures based on the results of this list of classifiers:
 
 And we continue the procedure by training another list of 5 classifiers, this time on data that drops tokens with outliers in intens_F3min, in addition to our established set of dropped outliers:
 
-```{r fstListDropOut3_1, class.output="displayCode", cache=TRUE}
+```{r}
+drop31StartTime <- proc.time()
+```
+
+```{r fstListDropOut3_1, class.output="displayCode", cache=params$testing}
 rm(fstListDropOut2_2)
 
 tryDrop <- negOutliers$Measure[1]
@@ -1501,6 +1609,10 @@ fstListDropOut3_1 <- foreach(seed = seedList,
                              }
 
 stopCluster(cl)
+```
+
+```{r}
+drop31EndTime <- proc.time()
 ```
 
 Create and save a summary object:
@@ -1571,7 +1683,12 @@ We re-rank measures based on the results of this list of classifiers:
 
 And we continue the procedure by training another list of 5 classifiers, this time on data that drops tokens with outliers in F1_70, in addition to our established set of dropped outliers:
 
-```{r fstListDropOut4_1, class.output="displayCode", cache=TRUE}
+
+```{r}
+drop41StartTime <- proc.time()
+```
+
+```{r fstListDropOut4_1, class.output="displayCode", cache=params$testing}
 rm(fstListDropOut3_1)
 
 tryDrop <- negOutliers$Measure[1]
@@ -1603,6 +1720,11 @@ fstListDropOut4_1 <- foreach(seed = seedList,
                              }
 
 stopCluster(cl)
+```
+
+
+```{r}
+drop41EndTime <- proc.time()
 ```
 
 Create and save a summary object:
@@ -1674,7 +1796,11 @@ We re-rank measures based on the results of this list of classifiers:
 
 And we continue the procedure by training another list of 5 classifiers, this time on data that drops tokens with outliers in F1_50, in addition to our established set of dropped outliers:
 
-```{r fstListDropOut5_1, class.output="displayCode", cache=TRUE}
+```{r}
+drop51StartTime <- proc.time()
+```
+
+```{r fstListDropOut5_1, class.output="displayCode", cache=params$testing}
 rm(fstListDropOut4_1)
 
 tryDrop <- negOutliers$Measure[1]
@@ -1706,6 +1832,10 @@ fstListDropOut5_1 <- foreach(seed = seedList,
                              }
 
 stopCluster(cl)
+```
+
+```{r}
+drop51EndTime <- proc.time()
 ```
 
 Create and save a summary object:
@@ -1777,7 +1907,11 @@ We re-rank measures based on the results of this list of classifiers:
 
 And we continue the procedure by training another list of 5 classifiers, this time on data that drops tokens with outliers in F3min, in addition to our established set of dropped outliers:
 
-```{r fstListDropOut6_1, class.output="displayCode", cache=TRUE}
+```{r}
+drop61StartTime <- proc.time()
+```
+
+```{r fstListDropOut6_1, class.output="displayCode", cache=params$testing}
 rm(fstListDropOut5_1)
 
 tryDrop <- negOutliers$Measure[1]
@@ -1809,6 +1943,10 @@ fstListDropOut6_1 <- foreach(seed = seedList,
                              }
 
 stopCluster(cl)
+```
+
+```{r}
+drop61EndTime <- proc.time()
 ```
 
 Create and save a summary object:
@@ -1880,7 +2018,11 @@ We re-rank measures based on the results of this list of classifiers:
 
 And we continue the procedure by training another list of 5 classifiers, this time on data that drops tokens with outliers in F4_40, in addition to our established set of dropped outliers:
 
-```{r fstListDropOut7_1, class.output="displayCode", cache=TRUE}
+```{r}
+drop71StartTime <- proc.time()
+```
+
+```{r fstListDropOut7_1, class.output="displayCode", cache=params$testing}
 rm(fstListDropOut6_1)
 
 tryDrop <- negOutliers$Measure[1]
@@ -1912,6 +2054,10 @@ fstListDropOut7_1 <- foreach(seed = seedList,
                              }
 
 stopCluster(cl)
+```
+
+```{r}
+drop71EndTime <- proc.time()
 ```
 
 Create and save a summary object:
@@ -1956,7 +2102,11 @@ list(smryDropOut6_1, smryDropOut7_1) %>%
 
 So we move on to the next measure in the ranking, F4_50, training a list of classifiers on data that drops outliers in F4_50 in addition to our established set of dropped outliers.
 
-```{r fstListDropOut7_2, class.output="displayCode", cache=TRUE}
+```{r}
+drop72StartTime <- proc.time()
+```
+
+```{r fstListDropOut7_2, class.output="displayCode", cache=params$testing}
 rm(fstListDropOut7_1)
 
 tryDrop <- negOutliers$Measure[2]
@@ -1988,6 +2138,10 @@ fstListDropOut7_2 <- foreach(seed = seedList,
                              }
 
 stopCluster(cl)
+```
+
+```{r}
+drop72EndTime <- proc.time()
 ```
 
 Create and save a summary object:
@@ -2032,7 +2186,11 @@ list(smryDropOut6_1, smryDropOut7_2) %>%
 
 So we move on to the next measure in the ranking, F1_60, training a list of classifiers on data that drops outliers in F1_60 in addition to our established set of dropped outliers. Since that's been two consecutive nonsignificant results, we'll stop this process if the next result is also nonsignificant.
 
-```{r fstListDropOut7_3, class.output="displayCode", cache=TRUE}
+```{r}
+drop73StartTime <- proc.time()
+```
+
+```{r fstListDropOut7_3, class.output="displayCode", cache=params$testing}
 rm(fstListDropOut7_2)
 
 tryDrop <- negOutliers$Measure[3]
@@ -2064,6 +2222,10 @@ fstListDropOut7_3 <- foreach(seed = seedList,
                              }
 
 stopCluster(cl)
+```
+
+```{r}
+drop73EndTime <- proc.time()
 ```
 
 Create and save a summary object:
@@ -2176,7 +2338,11 @@ list(smryDropOut0, smryDropOut1_1, smryDropOut2_2, smryDropOut3_1,
 
 Next, we'll train a final classifier with the settings we've tuned.
 
-```{r finalClassifier, class.output="displayCode", cache=TRUE}
+```{r}
+finalStartTime <- proc.time()
+```
+
+```{r finalClassifier, class.output="displayCode", cache=params$testing}
 registerDoSEQ()
 set.seed(302302)
 finalClassifier <- train(Rpresent ~ .,
@@ -2200,6 +2366,10 @@ finalClassifier <- train(Rpresent ~ .,
                          tuneGrid=data.frame(mtry=13, splitrule="gini", min.node.size=10))
 ```
 
+
+```{r}
+finalEndTime <- proc.time()
+```
 
 Here are the properties of our final classifier: performance measures, confusion matrix, variable importance, and timing. We'll save this final classifier to file.
 
@@ -2297,5 +2467,71 @@ This guide was generated in an R session with the following information:
 sessionInfo()
 ```
 
-# References {#Refs}
+# Generate test-script summary
 
+```{r reservation-time}
+##Pipe info from sacct into temp-file
+sacctString <- paste0("sacct -j ", params$`SLURM_job-id`, " -o JobID,Elapsed,Partition,Reserved,ResvCPU,AllocCPUS,MaxRSS -P > tmp_", params$`SLURM_job-id`)
+system(sacctString)
+##Read info
+info <- read_delim(paste0("tmp_", params$`SLURM_job-id`), delim="|", col_types="ctcttic")
+resTime <- 
+  info %>% 
+  filter(!is.na(Partition),
+         JobID==params$`SLURM_job-id`) %>% 
+  pull(Reserved) %>% 
+  replace_na(0) %>% 
+  as.double(units="secs")
+##Generate missing code if there's no resTime
+if (length(resTime)==0) resTime <- "Reservation time missing"
+##Remove temp-file--comment out for testing
+file.remove(paste0("tmp_", params$`SLURM_job-id`))
+```
+
+
+```{r generate-summary}
+##Outfile name
+outfile <- paste0(if_else(params$testing, "Timing_TEST", "Timing"), ".Rds")
+
+stopTime <- proc.time()
+
+timingSmry <- list(
+  jobID = params$`SLURM_job-id`,
+  nodelist = params$SLURM_nodeid,
+  testing = params$testing,
+  partition = params$SBATCH_partition,
+  nodes = params$SBATCH_nodes,
+  tasks = params$`SBATCH_tasks-per-node`,
+  cpus = params$`SBATCH_cpus-per-task`,
+  mem = params$SBATCH_mem,
+  reservTime = resTime,
+  startTime = startSysTime,
+  setupTime = setupEndTime - startTime,
+  saveLoadTime = saveLoadEndTime - saveLoadStartTime,
+  fstInitTime = fstInitEndTime - fstInitStartTime,
+  resampTime = resampEndTime - resampStartTime,
+  methodsTime = methodsEndTime - methodsStartTime,
+  foldsRepsTime = foldsRepsEndTime - foldsRepsStartTime,
+  tuneListTime = tuneListEndTime - tuneListStartTime,
+  tunedTime = tunedEndTime - tunedStartTime,
+  noOutTime = noOutEndTime - noOutStartTime,
+  drop0Time = drop0EndTime - drop0StartTime,
+  drop11Time = drop11EndTime - drop11StartTime,
+  drop21Time = drop21EndTime - drop21StartTime,
+  drop22Time = drop22EndTime - drop22StartTime,
+  drop31Time = drop31EndTime - drop31StartTime,
+  drop41Time = drop41EndTime - drop41StartTime,
+  drop51Time = drop51EndTime - drop51StartTime,
+  drop61Time = drop61EndTime - drop61StartTime,
+  drop71Time = drop71EndTime - drop71StartTime,
+  drop72Time = drop72EndTime - drop72StartTime,
+  drop73Time = drop73EndTime - drop73StartTime,
+  totalTime = stopTime - startTime
+)
+
+timingSmry %>% saveRDS(outfile)
+
+timingSmry
+```
+
+# References {#Refs}
