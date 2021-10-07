@@ -1,26 +1,1295 @@
-Lmod has detected the following error: These module(s) exist but cannot be
-loaded as requested: "r/4.0.0"
-
-   Try: "module spider r/4.0.0" to see how to load the module(s).
+61440000
 
 
+processing file: How_to_Train_Your_Classifier.Rmd
+  |                                                                              |                                                                      |   0%
+  ordinary text without R code
+
+  |                                                                              |                                                                      |   1%
+label: startTime
+  |                                                                              |.                                                                     |   1%
+  ordinary text without R code
 
 
-/var/spool/slurmd/job4478192/slurm_script: line 16: Rscript: command not found
+label: setup (with options) 
+List of 1
+ $ include: logi FALSE
+
+
+  ordinary text without R code
+
+  |                                                                              |.                                                                     |   2%
+label: setupEndTime
+
+  ordinary text without R code
+
+  |                                                                              |..                                                                    |   2%
+label: unnamed-chunk-1 (with options) 
+List of 2
+ $ echo  : logi FALSE
+ $ engine: chr "css"
+
+  |                                                                              |..                                                                    |   3%
+  ordinary text without R code
+
+
+label: unnamed-chunk-2 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+  |                                                                              |..                                                                    |   4%
+label: unnamed-chunk-3 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |...                                                                   |   4%
+  ordinary text without R code
+
+
+label: unnamed-chunk-4 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+  |                                                                              |...                                                                   |   5%
+label: unnamed-chunk-5 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |....                                                                  |   5%
+  ordinary text without R code
+
+
+label: unnamed-chunk-6 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |....                                                                  |   6%
+  ordinary text without R code
+
+
+label: imputation (with options) 
+List of 2
+ $ class.output: chr "displayCode"
+ $ cache       : logi FALSE
+
+
+  ordinary text without R code
+
+  |                                                                              |.....                                                                 |   6%
+label: markOutliers (with options) 
+List of 2
+ $ class.output: chr "displayCode"
+ $ cache       : logi FALSE
+
+  |                                                                              |.....                                                                 |   7%
+  ordinary text without R code
+
+
+label: unnamed-chunk-7 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+  |                                                                              |.....                                                                 |   8%
+label: unnamed-chunk-8 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |......                                                                |   8%
+  ordinary text without R code
+
+
+label: unnamed-chunk-9 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |......                                                                |   9%
+  ordinary text without R code
+
+
+label: unnamed-chunk-10 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+  |                                                                              |.......                                                               |   9%
+label: unnamed-chunk-11 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |.......                                                               |  10%
+  ordinary text without R code
+
+
+label: unnamed-chunk-12 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+  |                                                                              |.......                                                               |  11%
+label: unnamed-chunk-13
+  |                                                                              |........                                                              |  11%
+  ordinary text without R code
+
+
+label: fstInit (with options) 
+List of 2
+ $ class.output: chr "displayCode"
+ $ cache       : logi FALSE
+
+  |                                                                              |........                                                              |  12%
+  ordinary text without R code
+
+
+label: unnamed-chunk-14
+
+   inline R code fragments
+
+  |                                                                              |.........                                                             |  12%
+label: unnamed-chunk-15 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |.........                                                             |  13%
+  ordinary text without R code
+
+
+label: unnamed-chunk-16 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+   inline R code fragments
+
+  |                                                                              |.........                                                             |  14%
+label: unnamed-chunk-17 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |..........                                                            |  14%
+  ordinary text without R code
+
+
+label: unnamed-chunk-18 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+  |                                                                              |..........                                                            |  15%
+label: resampStartTime
+  |                                                                              |...........                                                           |  15%
+  ordinary text without R code
+
+
+label: fstListResamples (with options) 
+List of 2
+ $ class.output: chr "displayCode"
+ $ cache       : logi FALSE
+
+  |                                                                              |...........                                                           |  16%
+  ordinary text without R code
+
+
+label: resampEndTime
+
+  ordinary text without R code
+
+  |                                                                              |............                                                          |  17%
+label: unnamed-chunk-19 (with options) 
+List of 1
+ $ class.output: chr "fileRemove"
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-20 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+  |                                                                              |............                                                          |  18%
+label: unnamed-chunk-21 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |.............                                                         |  18%
+  ordinary text without R code
+
+
+label: unnamed-chunk-22 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |.............                                                         |  19%
+  ordinary text without R code
+
+
+label: unnamed-chunk-23 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+  |                                                                              |..............                                                        |  19%
+label: unnamed-chunk-24 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |..............                                                        |  20%
+  ordinary text without R code
+
+
+label: unnamed-chunk-25 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+  |                                                                              |..............                                                        |  21%
+label: unnamed-chunk-26
+  |                                                                              |...............                                                       |  21%
+  ordinary text without R code
+
+
+label: fstListMethods (with options) 
+List of 2
+ $ class.output: chr "displayCode"
+ $ cache       : logi FALSE
+
+  |                                                                              |...............                                                       |  22%
+  ordinary text without R code
+
+
+label: unnamed-chunk-27
+
+  ordinary text without R code
+
+  |                                                                              |................                                                      |  22%
+label: unnamed-chunk-28 (with options) 
+List of 1
+ $ class.output: chr "fileRemove"
+
+  |                                                                              |................                                                      |  23%
+  ordinary text without R code
+
+
+label: unnamed-chunk-29 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+  |                                                                              |.................                                                     |  24%
+label: unnamed-chunk-30 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-31 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+  |                                                                              |.................                                                     |  25%
+label: unnamed-chunk-32
+  |                                                                              |..................                                                    |  25%
+  ordinary text without R code
+
+
+label: fstListFoldsReps (with options) 
+List of 2
+ $ class.output: chr "displayCode"
+ $ cache       : logi FALSE
+
+  |                                                                              |..................                                                    |  26%
+  ordinary text without R code
+
+
+label: unnamed-chunk-33
+
+  ordinary text without R code
+
+  |                                                                              |...................                                                   |  27%
+label: unnamed-chunk-34 (with options) 
+List of 1
+ $ class.output: chr "fileRemove"
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-35 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+  |                                                                              |...................                                                   |  28%
+label: unnamed-chunk-36 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |....................                                                  |  28%
+  ordinary text without R code
+
+
+label: unnamed-chunk-37
+  |                                                                              |....................                                                  |  29%
+  ordinary text without R code
+
+
+label: fstListTuneGrid (with options) 
+List of 2
+ $ class.output: chr "displayCode"
+ $ cache       : logi FALSE
+
+
+  ordinary text without R code
+
+  |                                                                              |.....................                                                 |  29%
+label: unnamed-chunk-38
+  |                                                                              |.....................                                                 |  30%
+  ordinary text without R code
+
+
+label: unnamed-chunk-39 (with options) 
+List of 1
+ $ class.output: chr "fileRemove"
+
+
+  ordinary text without R code
+
+  |                                                                              |.....................                                                 |  31%
+label: smryTuneGrid (with options) 
+List of 2
+ $ class.output: chr "displayCode"
+ $ cache       : logi FALSE
+
+  |                                                                              |......................                                                |  31%
+  ordinary text without R code
+
+
+label: unnamed-chunk-40 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |......................                                                |  32%
+  ordinary text without R code
+
+
+label: unnamed-chunk-41
+  |                                                                              |.......................                                               |  32%
+  ordinary text without R code
+
+
+label: fstListNumTrees (with options) 
+List of 2
+ $ class.output: chr "displayCode"
+ $ cache       : logi FALSE
+
+  |                                                                              |.......................                                               |  33%
+  ordinary text without R code
+
+
+label: unnamed-chunk-42
+
+  ordinary text without R code
+
+  |                                                                              |........................                                              |  34%
+label: unnamed-chunk-43 (with options) 
+List of 1
+ $ class.output: chr "fileRemove"
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-44 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |........................                                              |  35%
+  ordinary text without R code
+
+
+label: unnamed-chunk-45 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |.........................                                             |  35%
+  ordinary text without R code
+
+
+label: unnamed-chunk-46
+  |                                                                              |.........................                                             |  36%
+  ordinary text without R code
+
+
+label: fstTuned (with options) 
+List of 2
+ $ class.output: chr "displayCode"
+ $ cache       : logi FALSE
+
+
+  ordinary text without R code
+
+  |                                                                              |..........................                                            |  37%
+label: unnamed-chunk-47
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-48 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+  |                                                                              |..........................                                            |  38%
+label: unnamed-chunk-49 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |...........................                                           |  38%
+  ordinary text without R code
+
+
+label: unnamed-chunk-50 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |...........................                                           |  39%
+  ordinary text without R code
+
+
+label: unnamed-chunk-51
+
+  ordinary text without R code
+
+  |                                                                              |............................                                          |  40%
+label: fstNoOutlier (with options) 
+List of 2
+ $ class.output: chr "displayCode"
+ $ cache       : logi FALSE
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-52
+
+  ordinary text without R code
+
+  |                                                                              |............................                                          |  41%
+label: unnamed-chunk-53 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |.............................                                         |  41%
+  ordinary text without R code
+
+
+label: unnamed-chunk-54 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |.............................                                         |  42%
+  ordinary text without R code
+
+
+label: unnamed-chunk-55 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |..............................                                        |  42%
+  ordinary text without R code
+
+
+label: unnamed-chunk-56
+  |                                                                              |..............................                                        |  43%
+  ordinary text without R code
+
+
+label: fstListDropOut0 (with options) 
+List of 2
+ $ class.output: chr "displayCode"
+ $ cache       : logi FALSE
+
+
+  ordinary text without R code
+
+  |                                                                              |...............................                                       |  44%
+label: unnamed-chunk-57
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-58 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |...............................                                       |  45%
+  ordinary text without R code
+
+
+label: unnamed-chunk-59 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |................................                                      |  45%
+  ordinary text without R code
+
+
+label: unnamed-chunk-60 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |................................                                      |  46%
+  ordinary text without R code
+
+
+label: unnamed-chunk-61 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+  |                                                                              |.................................                                     |  47%
+label: unnamed-chunk-62 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-63 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+  |                                                                              |.................................                                     |  48%
+label: unnamed-chunk-64 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |..................................                                    |  48%
+  ordinary text without R code
+
+
+label: unnamed-chunk-65
+  |                                                                              |..................................                                    |  49%
+  ordinary text without R code
+
+
+label: fstListDropOut1_1 (with options) 
+List of 2
+ $ class.output: chr "displayCode"
+ $ cache       : logi FALSE
+
+
+  ordinary text without R code
+
+  |                                                                              |...................................                                   |  50%
+label: unnamed-chunk-66
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-67 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+  |                                                                              |....................................                                  |  51%
+label: unnamed-chunk-68 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-69 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |....................................                                  |  52%
+  ordinary text without R code
+
+
+label: unnamed-chunk-70 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |.....................................                                 |  52%
+  ordinary text without R code
+
+  |                                                                              |.....................................                                 |  53%
+label: unnamed-chunk-71 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-72
+
+  ordinary text without R code
+
+  |                                                                              |......................................                                |  54%
+label: fstListDropOut2_1 (with options) 
+List of 2
+ $ class.output: chr "displayCode"
+ $ cache       : logi FALSE
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-73
+  |                                                                              |......................................                                |  55%
+  ordinary text without R code
+
+
+label: unnamed-chunk-74 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |.......................................                               |  55%
+  ordinary text without R code
+
+
+label: unnamed-chunk-75 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |.......................................                               |  56%
+  ordinary text without R code
+
+
+label: unnamed-chunk-76 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+  |                                                                              |........................................                              |  57%
+label: unnamed-chunk-77
+
+  ordinary text without R code
+
+
+label: fstListDropOut2_2 (with options) 
+List of 2
+ $ class.output: chr "displayCode"
+ $ cache       : logi FALSE
+
+  |                                                                              |........................................                              |  58%
+  ordinary text without R code
+
+
+label: unnamed-chunk-78
+  |                                                                              |.........................................                             |  58%
+  ordinary text without R code
+
+
+label: unnamed-chunk-79 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |.........................................                             |  59%
+  ordinary text without R code
+
+
+label: unnamed-chunk-80 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |..........................................                            |  59%
+  ordinary text without R code
+
+  |                                                                              |..........................................                            |  60%
+label: unnamed-chunk-81 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-82 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+  |                                                                              |...........................................                           |  61%
+label: unnamed-chunk-83 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-84
+  |                                                                              |...........................................                           |  62%
+  ordinary text without R code
+
+
+label: fstListDropOut3_1 (with options) 
+List of 2
+ $ class.output: chr "displayCode"
+ $ cache       : logi FALSE
+
+  |                                                                              |............................................                          |  62%
+  ordinary text without R code
+
+  |                                                                              |............................................                          |  63%
+label: unnamed-chunk-85
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-86 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+  |                                                                              |.............................................                         |  64%
+label: unnamed-chunk-87 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-88 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |.............................................                         |  65%
+  ordinary text without R code
+
+
+label: unnamed-chunk-89 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |..............................................                        |  65%
+  ordinary text without R code
+
+
+label: unnamed-chunk-90 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |..............................................                        |  66%
+  ordinary text without R code
+
+
+label: unnamed-chunk-91
+
+  ordinary text without R code
+
+  |                                                                              |...............................................                       |  67%
+label: fstListDropOut4_1 (with options) 
+List of 2
+ $ class.output: chr "displayCode"
+ $ cache       : logi FALSE
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-92
+  |                                                                              |...............................................                       |  68%
+  ordinary text without R code
+
+
+label: unnamed-chunk-93 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |................................................                      |  68%
+  ordinary text without R code
+
+
+label: unnamed-chunk-94 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |................................................                      |  69%
+  ordinary text without R code
+
+
+label: unnamed-chunk-95 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |.................................................                     |  69%
+  ordinary text without R code
+
+  |                                                                              |.................................................                     |  70%
+label: unnamed-chunk-96 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-97 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |.................................................                     |  71%
+  ordinary text without R code
+
+  |                                                                              |..................................................                    |  71%
+label: unnamed-chunk-98
+
+  ordinary text without R code
+
+
+label: fstListDropOut5_1 (with options) 
+List of 2
+ $ class.output: chr "displayCode"
+ $ cache       : logi FALSE
+
+  |                                                                              |..................................................                    |  72%
+  ordinary text without R code
+
+
+label: unnamed-chunk-99
+  |                                                                              |...................................................                   |  72%
+  ordinary text without R code
+
+  |                                                                              |...................................................                   |  73%
+label: unnamed-chunk-100 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-101 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+  |                                                                              |....................................................                  |  74%
+label: unnamed-chunk-102 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-103 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |....................................................                  |  75%
+  ordinary text without R code
+
+
+label: unnamed-chunk-104 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |.....................................................                 |  75%
+  ordinary text without R code
+
+  |                                                                              |.....................................................                 |  76%
+label: unnamed-chunk-105
+
+  ordinary text without R code
+
+
+label: fstListDropOut6_1 (with options) 
+List of 2
+ $ class.output: chr "displayCode"
+ $ cache       : logi FALSE
+
+
+  ordinary text without R code
+
+  |                                                                              |......................................................                |  77%
+label: unnamed-chunk-106
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-107 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |......................................................                |  78%
+  ordinary text without R code
+
+  |                                                                              |.......................................................               |  78%
+label: unnamed-chunk-108 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-109 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |.......................................................               |  79%
+  ordinary text without R code
+
+
+label: unnamed-chunk-110 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |........................................................              |  79%
+  ordinary text without R code
+
+  |                                                                              |........................................................              |  80%
+label: unnamed-chunk-111 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-112
+  |                                                                              |........................................................              |  81%
+  ordinary text without R code
+
+  |                                                                              |.........................................................             |  81%
+label: fstListDropOut7_1 (with options) 
+List of 2
+ $ class.output: chr "displayCode"
+ $ cache       : logi FALSE
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-113
+  |                                                                              |.........................................................             |  82%
+  ordinary text without R code
+
+
+label: unnamed-chunk-114 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |..........................................................            |  82%
+  ordinary text without R code
+
+  |                                                                              |..........................................................            |  83%
+label: unnamed-chunk-115 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-116 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+  |                                                                              |...........................................................           |  84%
+label: unnamed-chunk-117
+
+  ordinary text without R code
+
+
+label: fstListDropOut7_2 (with options) 
+List of 2
+ $ class.output: chr "displayCode"
+ $ cache       : logi FALSE
+
+  |                                                                              |...........................................................           |  85%
+  ordinary text without R code
+
+
+label: unnamed-chunk-118
+  |                                                                              |............................................................          |  85%
+  ordinary text without R code
+
+  |                                                                              |............................................................          |  86%
+label: unnamed-chunk-119 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-120 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |.............................................................         |  86%
+  ordinary text without R code
+
+  |                                                                              |.............................................................         |  87%
+label: unnamed-chunk-121 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-122
+  |                                                                              |.............................................................         |  88%
+  ordinary text without R code
+
+  |                                                                              |..............................................................        |  88%
+label: fstListDropOut7_3 (with options) 
+List of 2
+ $ class.output: chr "displayCode"
+ $ cache       : logi FALSE
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-123
+  |                                                                              |..............................................................        |  89%
+  ordinary text without R code
+
+
+label: unnamed-chunk-124 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |...............................................................       |  89%
+  ordinary text without R code
+
+  |                                                                              |...............................................................       |  90%
+label: unnamed-chunk-125 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-126 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |...............................................................       |  91%
+  ordinary text without R code
+
+  |                                                                              |................................................................      |  91%
+label: unnamed-chunk-127 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-128 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |................................................................      |  92%
+  ordinary text without R code
+
+
+label: unnamed-chunk-129 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |.................................................................     |  92%
+  ordinary text without R code
+
+  |                                                                              |.................................................................     |  93%
+label: unnamed-chunk-130 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-131
+  |                                                                              |.................................................................     |  94%
+  ordinary text without R code
+
+  |                                                                              |..................................................................    |  94%
+label: finalClassifier (with options) 
+List of 2
+ $ class.output: chr "displayCode"
+ $ cache       : logi FALSE
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-132
+  |                                                                              |..................................................................    |  95%
+  ordinary text without R code
+
+
+label: unnamed-chunk-133 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |...................................................................   |  95%
+  ordinary text without R code
+
+  |                                                                              |...................................................................   |  96%
+label: unnamed-chunk-134 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-135 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |....................................................................  |  96%
+  ordinary text without R code
+
+  |                                                                              |....................................................................  |  97%
+label: unnamed-chunk-136 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+
+label: unnamed-chunk-137 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+  |                                                                              |....................................................................  |  98%
+  ordinary text without R code
+
+  |                                                                              |..................................................................... |  98%
+label: unnamed-chunk-138 (with options) 
+List of 1
+ $ class.output: chr "displayCode"
+
+
+  ordinary text without R code
+
+  |                                                                              |..................................................................... |  99%
+label: unnamed-chunk-139 (with options) 
+List of 1
+ $ class.source: chr "displayCode"
+
+
+  ordinary text without R code
+
+
+label: reservation-time
+  |                                                                              |......................................................................|  99%
+  ordinary text without R code
+
+  |                                                                              |......................................................................| 100%
+label: generate-summary
+
+  ordinary text without R code
+
+
+output file: How_to_Train_Your_Classifier.knit.md
+
+/ihome/crc/install/pandoc/pandoc-2.5/bin/pandoc +RTS -K512m -RTS How_to_Train_Your_Classifier.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output How_to_Train_Your_Classifier.html --lua-filter /ihome/crc/install/gcc-8.2.0/r/4.1.0/lib64/R/library/bookdown/rmarkdown/lua/custom-environment.lua --lua-filter /ihome/crc/install/gcc-8.2.0/r/4.1.0/lib64/R/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /ihome/crc/install/gcc-8.2.0/r/4.1.0/lib64/R/library/rmarkdown/rmarkdown/lua/latex-div.lua --self-contained --wrap preserve --variable bs3=TRUE --standalone --section-divs --table-of-contents --toc-depth 3 --variable toc_float=1 --variable toc_selectors=h1,h2,h3 --variable toc_collapsed=1 --variable toc_smooth_scroll=1 --variable toc_print=1 --template /ihome/crc/install/gcc-8.2.0/r/4.1.0/lib64/R/library/rmarkdown/rmd/h/default.html --no-highlight --variable highlightjs=1 --variable theme=bootstrap --include-in-header /scratch/slurm-4481119/RtmpCIAofG/rmarkdown-stra200209b84fc.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --variable code_folding=show --variable code_menu=1 --filter /ihome/crc/install/pandoc/pandoc-2.5/bin/pandoc-citeproc 
+
+Output created: How_to_Train_Your_Classifier.html
+Warning messages:
+1: In for (i in seq(along = pkg)) { :
+  closing unused connection 14 (<-localhost:11439)
+2: In for (i in seq(along = pkg)) { :
+  closing unused connection 13 (<-localhost:11439)
+3: In for (i in seq(along = pkg)) { :
+  closing unused connection 12 (<-localhost:11439)
+4: In for (i in seq(along = pkg)) { :
+  closing unused connection 11 (<-localhost:11439)
+5: In for (i in seq(along = pkg)) { :
+  closing unused connection 10 (<-localhost:11439)
+6: In for (i in seq(along = pkg)) { :
+  closing unused connection 9 (<-localhost:11439)
+7: In for (i in seq(along = pkg)) { :
+  closing unused connection 8 (<-localhost:11439)
+8: In for (i in seq(along = pkg)) { :
+  closing unused connection 7 (<-localhost:11439)
+9: In for (i in seq(along = pkg)) { :
+  closing unused connection 6 (<-localhost:11439)
+10: In for (i in seq(along = pkg)) { :
+  closing unused connection 5 (<-localhost:11439)
 ============================================================================
                                JOB STATISTICS                              
 ============================================================================
-      SubmitTime: 2021-10-04T13:17:52
-         EndTime: 2021-10-04T22:17:54
-         RunTime: 00:00:01
-           JobId: 4478192
+      SubmitTime: 2021-10-06T10:58:08
+         EndTime: 2021-10-06T19:59:57
+         RunTime: 06:14:37
+           JobId: 4481119
             TRES: cpu=16,mem=60000M,node=1,billing=12
        Partition: smp
-        NodeList: smp-n36
+        NodeList: smp-n28
          Command: /ihome/dvillarreal/dav49/How-to-Train-Your-Classifier/smp-shell-script.sh
           StdOut: /ihome/dvillarreal/dav49/How-to-Train-Your-Classifier/smp-shell-script.out
 More information:
-    - `sacct -M smp -j 4478192 -S 2021-10-04T13:17:52 -E 2021-10-04T22:17:54`
+    - `sacct -M smp -j 4481119 -S 2021-10-06T10:58:08 -E 2021-10-06T19:59:57`
    Print control:
     - List of all possible fields: `sacct --helpformat`
     - Add `--format=<field1,field2,etc>` with fields of interest
