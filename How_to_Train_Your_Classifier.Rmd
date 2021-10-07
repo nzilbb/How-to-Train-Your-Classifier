@@ -80,7 +80,7 @@ blockquote {
 
 # Preface: `crc-version` branch
 
-This document was created to test the performance of the [Center for Research Computing](https://crc.pitt.edu/) high-performance computing cluster, and to save the data for later. Because Pitt's HPC cluster setup differs from the University of Canterbury HPC cluster on which this document was originally run, the output data in this document isn't identical to that of the [original](https://nzilbb.github.io/How-to-Train-Your-Classifier/How_to_Train_Your_Classifier.html). Information on cluster performance (i.e., timing) can be found [below](#generate_test-script_summary). This repo also contains the [Slurm shell script](https://github.com/nzilbb/How-to-Train-Your-Classifier/blob/crc-version/smp-shell-script.sh) that was used to run this document.
+This document was created to test the performance of the [Center for Research Computing](https://crc.pitt.edu/) high-performance computing cluster, and to save the data for later. Because Pitt's HPC cluster setup differs from the University of Canterbury HPC cluster on which this document was originally run, the output data in this document isn't identical to that of the [original](https://nzilbb.github.io/How-to-Train-Your-Classifier/How_to_Train_Your_Classifier.html). Information on cluster performance (i.e., timing) can be found [below](#Generate_test-script_summary). This repo also contains the [Slurm shell script](https://github.com/nzilbb/How-to-Train-Your-Classifier/blob/crc-version/smp-shell-script.sh) that was used to run this document.
 
 
 # Introduction
