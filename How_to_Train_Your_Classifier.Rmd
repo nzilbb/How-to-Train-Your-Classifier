@@ -133,6 +133,7 @@ Load the /r/ data, which includes 40614 rows and 217 columns, the last 180 of wh
 
 > The first 37 columns contain mostly linguistic information, plus LaBB-CAT metadata (TokenNum and MatchId) and speaker data (Speaker, which has been anonymized, and Gender). To preserve anonymity, both Speaker and Word have been anonymized to dummy factors. Stress is coded as either ' (primary word stress), " (secondary word stress), or 0 (unstressed). Syllable and columns ending in "DISC" are phonemic strings represented in the DISC phonetic alphabet used by CELEX (see https://catalog.ldc.upenn.edu/docs/LDC96L14/eug_let.pdf); FollSegmentNoPause and FollSegment are represented in the ARPAbet codes used by the CMU pronouncing dictionary, without stress markers on vowels (see http://www.speech.cs.cmu.edu/cgi-bin/cmudict); and Vowel is represented in Wells lexical sets as they relate to New Zealand English (see https://www.phon.ucl.ac.uk/home/wells/stanlexsets.htm). HowCoded is used to separate tokens that have already been hand-coded from those to be auto-coded (which therefore have NA for Rpresent). All other columns should be self-explanatory.
 
+<a id="training-data" />
 
 ```{r, class.output="displayCode"}
 trainingData <- readRDS("Data/RClassifierData_03July2019.Rds")
